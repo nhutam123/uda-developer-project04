@@ -4,9 +4,10 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
 
-import { deleteToDo, removeImageInS3 } from '../../businessLogic/ToDo' 
+import { deleteToDo } from '../../helpers/todos' 
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
+import { removeImageInS3 } from '../../helpers/attachmentUtils'
 
 const logger = createLogger('Log from deleteTodo.ts');
 

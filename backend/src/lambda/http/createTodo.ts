@@ -4,7 +4,7 @@ import * as middy from 'middy'
 import { cors,httpErrorHandler } from 'middy/middlewares'
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
 import { getUserId } from '../utils';
-import { createToDo } from '../../businessLogic/ToDo' 
+import { createToDo } from '../../helpers/todos' 
 import { createLogger } from '../../utils/logger'
 
 
