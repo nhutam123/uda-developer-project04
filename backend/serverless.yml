@@ -222,7 +222,8 @@ resources:
         BucketName: ${self:provider.environment.S3_BUCKET_NAME}
         CorsConfiguration:
           CorsRules:
-            - AllowedOrigins:
+            -
+              AllowedOrigins:
                 - '*'
               AllowedHeaders:
                 - '*'
@@ -232,7 +233,7 @@ resources:
                 - POST
                 - DELETE
                 - HEAD
-              MaxAge: 600
+              MaxAge: 3000
    
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
