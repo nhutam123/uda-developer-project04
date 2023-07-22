@@ -8,7 +8,6 @@ import { createLogger } from '../utils/logger';
 const logger = createLogger('Log from Todos.ts')
 const uuidv4 = require('uuid/v4');
 const toDoAccess = new ToDoAccess();
-const s3BucketName = process.env.S3_BUCKET_NAME;
 
 export async function getAllToDo(userId: string): Promise<TodoItem[]> {
     logger.info(`Getting all todos for user: ${userId}`)
@@ -22,7 +21,7 @@ export function createToDo(createTodoRequest: CreateTodoRequest, userId: string)
     const newTodo: TodoItem = {
         userId: userId,
         todoId: todoId,
-        attachmentUrl:  `https://${s3BucketName}.s3.us-east-1.amazonaws.com/${todoId}`,
+        attachmentUrl:  "",
         createdAt: new Date().getTime().toString(),
         done: false,
         ...createTodoRequest,

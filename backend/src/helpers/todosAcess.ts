@@ -55,16 +55,12 @@ export class ToDoAccess {
                 "userId": userId,
                 "todoId": todoId
             },
-            UpdateExpression: "set #todoName = :todoName, #todoDate = :todoDate, #status = :status",
+            UpdateExpression: "set #attachmentUrl = :attachmentUrl",
             ExpressionAttributeNames: {
-                "#todoName": "name",
-                "#todoDate": "dueDate",
-                "#status": "done"
+                "#attachmentUrl": "attachmentUrl",
             },
             ExpressionAttributeValues: {
-                ":todoName": todoUpdate.name,
-                ":todoDate": todoUpdate.dueDate,
-                ":status": todoUpdate.done
+                ":attachmentUrl": `https://${this.s3BucketName}.s3.us-east-1.amazonaws.com/${todoId}`,
             },
             ReturnValues: "UPDATED_NEW"
         };
