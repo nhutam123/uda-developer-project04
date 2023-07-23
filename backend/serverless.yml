@@ -234,6 +234,11 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 3000
+        PublicAccessBlockConfiguration:
+              BlockPublicAcls: false
+              BlockPublicPolicy: false
+              IgnorePublicAcls: false
+              RestrictPublicBuckets: false
    
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator

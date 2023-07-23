@@ -12,8 +12,8 @@ export async function removeImageInS3(id: string): Promise<void> {
   return toDoAccess.removeImageInS3(id);
 }
 
-export function generateUploadUrl(todoId: string): Promise<string> {
+export function generateUploadUrl(todoId: string, userId: string): Promise<string> {
   logger.info(`Generating uploadUrl of todoId: ${todoId}}`)
 
-  return toDoAccess.generateUploadUrl(todoId);
+  return toDoAccess.generateUploadUrl(todoId, userId);
 }

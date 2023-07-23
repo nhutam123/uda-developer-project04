@@ -55,12 +55,16 @@ export class ToDoAccess {
                 "userId": userId,
                 "todoId": todoId
             },
-            UpdateExpression: "set #attachmentUrl = :attachmentUrl",
+            UpdateExpression: "set #todoName = :todoName, #todoDate = :todoDate, #status = :status",
             ExpressionAttributeNames: {
-                "#attachmentUrl": "attachmentUrl",
+                "#todoName": "name",
+                "#todoDate": "dueDate",
+                "#status": "done"
             },
             ExpressionAttributeValues: {
-                ":attachmentUrl": `https://${this.s3BucketName}.s3.us-east-1.amazonaws.com/${todoId}`,
+                ":todoName": todoUpdate.name,
+                ":todoDate": todoUpdate.dueDate,
+                ":status": todoUpdate.done
             },
             ReturnValues: "UPDATED_NEW"
         };
@@ -86,13 +90,23 @@ export class ToDoAccess {
         return;
     }
 
-    async generateUploadUrl(todoId: string): Promise<string> {
+    async generateUploadUrl(todoId: string, userId: string): Promise<string> {
         logger.info('Generate upload url of: ', todoId);
         const url = this.s3Client.getSignedUrl('putObject', {
             Bucket: this.s3BucketName,
             Key: todoId,
             Expires: 600,
         });
+        await this.docClient.update({
+            TableName: this.todoTable,
+            Key: { userId, todoId },
+            UpdateExpression: "set attachmentUrl=:URL",
+            ExpressionAttributeValues: {
+              ":URL": url.split("?")[0]
+          },
+          ReturnValues: "UPDATED_NEW"
+        })
+        .promise();
 
         return url as string;
     }

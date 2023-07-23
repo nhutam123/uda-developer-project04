@@ -5,14 +5,15 @@ import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
 import { generateUploadUrl } from '../../helpers/attachmentUtils'
 import { createLogger } from '../../utils/logger'
+import { getUserId } from '../utils'
 
 
 const logger = createLogger('GenerateUploadUrl');
 export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     logger.info('Generating UploadUrl Event: ', event);
     const todoId = event.pathParameters.todoId;
-
-    const URL = await generateUploadUrl(todoId);
+    const userId = getUserId(event);
+    const URL = await generateUploadUrl(todoId, userId);
 
     return {
         statusCode: 202,
